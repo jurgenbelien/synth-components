@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synth Oscillator</title>
+  <script type="module" src="./synth-oscillator.js"></script>
+  <script type="module" src="./synth-filter.js"></script>
+</head>
+<body>
+  <synth-oscillator id="synthOscillator"></synth-oscillator>
+  <synth-filter id="synthFilter"></synth-filter>
+  <script>
+    document.addEventListener('click', () => {
+      const context = new AudioContext();
+      const synthComponents = new Map();
+      // Get all synth-* elements via XPath
+      const synthComponentQuery = document.evaluate(
+        '//*[starts-with(name(), "synth-")]',
+        document,
+        null,
+        XPathResult.UNORDERED_NODE_ITERATOR_TYPE,
+        null
+      );
+      // Pass audioContext
+      while(component = synthComponentQuery.iterateNext()) {
+        synthComponents.set(component.id, component);
+        component.init(context);
+      }
+      synthComponents.get('synthOscillator').destination = synthComponents.get('synthFilter');
+      synthComponents.get('synthFilter').destination = context.destination;
+
+    }, { once: true });
+  </script>
+</body>
+</html>

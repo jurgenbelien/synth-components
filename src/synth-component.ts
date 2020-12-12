@@ -1,14 +1,15 @@
 import { LitElement, property, internalProperty } from 'lit-element';
 import { Parameter } from './parameter';
+import { ParameterSlider } from './parameter-slider';
 export * from './parameter';
 export * from 'lit-element';
 
 // Support string index for properties
 export interface SynthComponent {
-  [key: string]: any;
+  [key: string]: any; //eslint-disable-line
 }
 
-export type PropertyInputElement = HTMLInputElement | HTMLTextAreaElement;
+export type PropertyInputElement = HTMLInputElement | HTMLTextAreaElement | ParameterSlider;
 
 export class SynthComponent extends LitElement {
   @property({ attribute: false })
