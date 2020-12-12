@@ -1,4 +1,4 @@
-import { html, customElement, property, internalProperty, SynthComponent, Parameter } from './synth-component';
+import { html, customElement, property, internalProperty, SynthComponent, Parameter, SynthDestination } from './synth-component';
 
 export enum FilterType {
   LP = 'lowpass',
@@ -24,15 +24,13 @@ export class SynthFilter extends SynthComponent {
   @property({ type: Number })
   pitch = 0;
 
-  init(context: AudioContext, destination: AudioDestinationNode | undefined) {
+  init(context: AudioContext, destination?: SynthDestination) {
     this.context = context;
     this.audioNode = new BiquadFilterNode(this.context, {
       frequency: this.frequency.value,
       type: this.filterType,
     });
-    if (destination) {
-      this.audioNode.connect(destination);
-    }
+    this.connectDestination(destination);
   }
 
   @property({ type: String })
@@ -62,7 +60,7 @@ export class SynthFilter extends SynthComponent {
 
       switch (true) {
         case updateDestination:
-          this.audioNode.connect(this.destination as AudioNode);
+          this.connectDestination(this.destination);
           break;
         case updateFilterType:
           this.audioNode.type = this.filterType;

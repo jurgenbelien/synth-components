@@ -10,10 +10,10 @@ export interface SynthComponent {
 }
 
 export type PropertyInputElement = HTMLInputElement | HTMLTextAreaElement | ParameterSlider;
-
+export type SynthDestination =  AudioNode | { audioNode: AudioNode };
 export class SynthComponent extends LitElement {
   @property({ attribute: false })
-  destination: AudioNode | { audioNode: AudioNode } | undefined;
+  destination: SynthDestination | undefined;
 
   @internalProperty()
   protected audioNode: AudioNode | undefined;
@@ -25,13 +25,23 @@ export class SynthComponent extends LitElement {
     return base * Math.pow(2, vOct);
   }
 
-  init(context: AudioContext, destination: AudioDestinationNode | undefined) {
+  connectDestination(destination?: SynthDestination) {
+    let audioDestinationNode;
+    if (destination instanceof AudioNode) {
+      audioDestinationNode = destination;
+    } else if (destination && destination.audioNode instanceof AudioNode) {
+      audioDestinationNode = destination.audioNode;
+    }
+    if (audioDestinationNode && this.audioNode) {
+      this.destination = destination;
+      this.audioNode.connect(audioDestinationNode);
+    }
+  }
+
+  init(context: AudioContext, destination?: SynthDestination) {
     this.context = context;
     this.audioNode = new AudioNode();
-
-    if (destination) {
-      this.audioNode.connect(destination);
-    }
+    this.connectDestination(destination);
   }
 
   changeProperty({ currentTarget }: { currentTarget: PropertyInputElement }) {

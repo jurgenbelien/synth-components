@@ -1,4 +1,4 @@
-import { SynthComponent, Parameter, html, customElement, property, internalProperty } from './synth-component';
+import { SynthComponent, Parameter, html, customElement, property, internalProperty, SynthDestination } from './synth-component';
 import './parameter-slider';
 
 export enum Wave {
@@ -16,20 +16,18 @@ const ELEMENT_NAME = 'synth-oscillator';
 @customElement(ELEMENT_NAME)
 export class SynthOscillator extends SynthComponent {
   @property({ attribute: false })
-  destination: AudioNode | { audioNode: AudioNode } | undefined;
+  destination: SynthDestination | undefined;
 
   @property({ type: Number })
   pitch = 0;
 
-  init(context: AudioContext, destination: AudioDestinationNode | undefined): void {
+  init(context: AudioContext, destination?: SynthDestination): void {
     this.context = context;
     this.audioNode = new OscillatorNode(this.context, {
       frequency: SynthOscillator.vOctToFrequency(this.pitch, this.frequency.value),
       type: this.wave,
     });
-    if (destination) {
-      this.audioNode.connect(destination);
-    }
+    this.connectDestination(destination);
     this.audioNode.start();
   }
 
@@ -60,15 +58,7 @@ export class SynthOscillator extends SynthComponent {
 
       switch (true) {
         case updateDestination: {
-          let destination;
-          if (this.destination instanceof AudioNode) {
-            destination = this.destination;
-          } else if (this.destination && this.destination.audioNode instanceof AudioNode) {
-            destination = this.destination.audioNode;
-          }
-          if (destination) {
-            this.audioNode.connect(destination);
-          }
+          this.connectDestination(this.destination);
           break;
         }
         case updateWave:
