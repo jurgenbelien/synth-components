@@ -6,10 +6,12 @@
   <title>Synth Oscillator</title>
   <script type="module" src="./synth-oscillator.js"></script>
   <script type="module" src="./synth-filter.js"></script>
+  <script type="module" src="./synth-amplifier.js"></script>
 </head>
 <body>
   <synth-oscillator id="synthOscillator"></synth-oscillator>
   <synth-filter id="synthFilter"></synth-filter>
+  <synth-amplifier id="synthAmplifier"></synth-amplifier>
   <script>
     document.addEventListener('click', () => {
       const context = new AudioContext();
@@ -28,7 +30,8 @@
         component.init(context);
       }
       synthComponents.get('synthOscillator').destination = synthComponents.get('synthFilter');
-      synthComponents.get('synthFilter').destination = context.destination;
+      synthComponents.get('synthFilter').destination = synthComponents.get('synthAmplifier');
+      synthComponents.get('synthAmplifier').destination = context.destination;
 
     }, { once: true });
   </script>
