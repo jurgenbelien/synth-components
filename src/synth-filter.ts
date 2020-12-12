@@ -22,7 +22,7 @@ export class SynthFilter extends SynthComponent {
   destination: AudioNode | undefined;
 
   @property({ type: Number })
-  pitch: number = 0;
+  pitch = 0;
 
   init(context: AudioContext, destination: AudioDestinationNode | undefined) {
     this.context = context;
@@ -53,7 +53,7 @@ export class SynthFilter extends SynthComponent {
   @internalProperty()
   protected filterTypes = Object.values(FilterType);
 
-  updated(changedProperties: Map<string, any>) {
+  updated(changedProperties: Map<string, number | string | Parameter | undefined>) {
     if (!!this.context && !!this.audioNode) {
       const updateDestination = changedProperties.has('destination') && !!this.destination;
       const updateFilterType = changedProperties.has('filterType');

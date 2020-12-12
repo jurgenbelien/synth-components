@@ -9,7 +9,7 @@ export class ParameterSlider extends LitElement {
   name: string = ELEMENT_NAME;
 
   @property({ type: String })
-  label: string = 'Parameter';
+  label = 'Parameter';
 
   @property({ type: Number })
   min = 0;
@@ -24,7 +24,7 @@ export class ParameterSlider extends LitElement {
   taper: Taper = Taper.LOG;
 
   @property({ type: Number })
-  precision: number = 0.001;
+  precision = 0.001;
 
   // Value to position
   get position() {
