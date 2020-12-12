@@ -13,7 +13,7 @@ Note that the Web Audio API only works after a user has interacted with the page
 ## Classes
 
 ### SynthComponent
-This is the base class. Other components extend this class. It itself extends LitElement to make adding properties and UI more convienient. Methods you'll mostly used are `init` to connect an output and `changeProperty` to modify the component's properties and parameters. Take a look at the `index.html` on how to initialize the synth components.
+This is the base class. Other components extend this class. It itself extends LitElement to make adding properties and UI more convienient. Methods you'll mostly use are `init` to set up and connect an output and `changeProperty` to modify the component's properties and parameters. Take a look at the `index.html` on how to initialize the synth components.
 
 ### Parameter
 Parameters a specific (numeric) property with additional properties. It has a minimum and maximum value, as well as a [taper](https://en.wikipedia.org/wiki/Potentiometer#Resistance–position_relationship:_"taper"), ie the relation between the graphical representation of the value and its actual value. For example, an increase in pitch has to double the frequency, therefore a range slider to increase the pitch should be exponential, resulting in a logarithmic taper.
