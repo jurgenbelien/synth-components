@@ -1,6 +1,6 @@
 export enum Taper {
   LIN = 'lin',
-  LOG = 'lin',
+  LOG = 'log',
 }
 
 export class Parameter {
