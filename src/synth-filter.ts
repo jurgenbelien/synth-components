@@ -19,7 +19,7 @@ const ELEMENT_NAME = 'synth-filter';
 @customElement(ELEMENT_NAME)
 export class SynthFilter extends SynthComponent {
   @property({ attribute: false })
-  destination: AudioNode | undefined;
+  destination?: AudioNode;
 
   @property({ type: Number })
   pitch = 0;
@@ -43,10 +43,10 @@ export class SynthFilter extends SynthComponent {
   resonance: Parameter = new Parameter(INIT_RESONANCE, MIN_RESONANCE, MAX_RESONANCE, Parameter.LOG);
 
   @internalProperty()
-  protected audioNode: BiquadFilterNode | undefined;
+  protected audioNode?: BiquadFilterNode;
 
   @internalProperty()
-  protected context: AudioContext | undefined;
+  protected context?: AudioContext;
 
   @internalProperty()
   protected filterTypes = Object.values(FilterType);

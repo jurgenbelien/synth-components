@@ -16,7 +16,7 @@ const ELEMENT_NAME = 'synth-oscillator';
 @customElement(ELEMENT_NAME)
 export class SynthOscillator extends SynthComponent {
   @property({ attribute: false })
-  destination: SynthDestination | undefined;
+  destination?: SynthDestination;
 
   @property({ type: Number })
   pitch = 0;
@@ -38,10 +38,10 @@ export class SynthOscillator extends SynthComponent {
   wave: Wave = Wave.SAW;
 
   @internalProperty()
-  protected audioNode: OscillatorNode | undefined;
+  protected audioNode?: OscillatorNode;
 
   @internalProperty()
-  protected context: AudioContext | undefined;
+  protected context?: AudioContext;
 
   @internalProperty()
   protected waveOptions = Object.values(Wave);

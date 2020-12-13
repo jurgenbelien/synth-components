@@ -9,12 +9,12 @@ const ELEMENT_NAME = 'synth-amplifier';
 @customElement(ELEMENT_NAME)
 export class SynthAmplifier extends SynthComponent {
   @property({ attribute: false })
-  destination: SynthDestination | undefined;
+  destination?: SynthDestination;
 
   @property({ attribute: false })
   gain: Parameter = new Parameter(INIT_GAIN, MIN_GAIN, MAX_GAIN, Taper.LIN);
 
-  init(context: AudioContext, destination: SynthDestination | undefined) {
+  init(context: AudioContext, destination?: SynthDestination) {
     this.context = context;
     this.audioNode = this.context.createGain();
     this.audioNode.gain.setValueAtTime(this.gain.value, this.context.currentTime);
@@ -22,10 +22,10 @@ export class SynthAmplifier extends SynthComponent {
   }
 
   @internalProperty()
-  protected audioNode: GainNode | undefined;
+  protected audioNode?: GainNode;
 
   @internalProperty()
-  protected context: AudioContext | undefined;
+  protected context?: AudioContext;
 
   updated(changedProperties: Map<string, number | string | Parameter | undefined>) {
     if (!!this.context && !!this.audioNode) {

@@ -13,13 +13,13 @@ export type PropertyInputElement = HTMLInputElement | HTMLTextAreaElement | Para
 export type SynthDestination =  AudioNode | { audioNode: AudioNode };
 export class SynthComponent extends LitElement {
   @property({ attribute: false })
-  destination: SynthDestination | undefined;
+  destination?: SynthDestination;
 
   @internalProperty()
-  protected audioNode: AudioNode | undefined;
+  protected audioNode?: AudioNode;
 
   @internalProperty()
-  protected context: AudioContext | undefined;
+  protected context?: AudioContext;
 
   static vOctToFrequency (vOct: number, base = 0): number {
     return base * Math.pow(2, vOct);
